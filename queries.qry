@@ -1,0 +1,56 @@
+/** Sample queries for Commodity Trading business network
+*/
+
+query selectCommodities {
+  description: "Select all commoditie"
+  statement:
+    SELECT itrazo.Commodity
+}
+
+query selectCommoditiesByExchange {
+  description: "Select all commodities based on their main exchange"
+  statement:
+    SELECT itrazo.Commodity
+      WHERE (mainExchange==_$exchange)
+}
+
+query selectCommoditiesByOwner {
+  description: "Select all commodities based on their owner"
+  statement:
+    SELECT itrazo.Commodity
+      WHERE (owner == _$owner)
+}
+
+query selectCommoditiesWithHighQuantity {
+  description: "Select commodities based on quantity"
+  statement:
+    SELECT itrazo.Commodity
+      WHERE (quantity > 60)
+}
+
+query ShowRemoveNotificationFromHistorians{ 
+  description: "Select RemoveNotification from all historians" 
+  statement: 
+    SELECT org.hyperledger.composer.system.HistorianRecord
+      WHERE (transactionType == 'itrazo.RemoveHighQuantityCommodities' OR transactionType == 'org.hyperledger.composer.system.AddAsset') 
+}
+
+// https://developer.ibm.com/tutorials/cl-create-powerful-blockchain-queries-with-hyperledger-composer/
+//* Search HistorianRecord using multiple conditions 
+// query showCommodityAllHistorians{ 
+//   description: "Select commodity all historians" 
+//   statement: 
+//     SELECT org.hyperledger.composer.system.HistorianRecord FROM 
+// HistorianRegistry
+//           WHERE (transactionType == 'AddAsset' OR transactionType == 
+// 'UpdateAsset' OR transactionType == 'RemoveAsset') 
+// } 
+
+//* Search HistorianRecord using TimeStamp
+
+// query findCommmodityHistoriansWithTime{ 
+//   description: "Find commodity historians after a specified time" 
+//   statement: 
+//     SELECT org.hyperledger.composer.system.HistorianRecord FROM 
+// HistorianRegistry WHERE (transactionTimestamp > _$justnow) 
+// }

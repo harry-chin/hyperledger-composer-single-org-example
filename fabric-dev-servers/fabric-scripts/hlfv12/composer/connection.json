@@ -1,0 +1,66 @@
+{
+    "name": "hlfv1",
+    "x-type": "hlfv1",
+    "version": "1.0.0",
+    "x-commitTimeout": 300,
+
+    "peers": {
+        "peer0.grower.hc.com": {
+            "url": "grpc://localhost:7051"
+        }
+    },
+    
+    "certificateAuthorities": {
+        "ca.grower.hc.com": {
+            "url": "http://localhost:7054",
+            "caName": "ca.grower.hc.com"
+        }
+    },
+
+    "orderers": {
+        "orderer.hc.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+
+    "organizations": {
+        "Grower": {
+            "mspid": "GrowerMSP",
+            "peers": [
+                "peer0.grower.hc.com"
+            ],
+            "certificateAuthorities": [
+                "ca.grower.hc.com"
+            ]
+        }
+    },
+
+    "channels": {
+        "composerchannel": {
+            "orderers": [
+                "orderer.hc.com"
+            ],
+            "peers": {
+                "peer0.grower.hc.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+
+    "client": {
+        "organization": "Grower",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300",
+                    "eventHub": "300",
+                    "eventReg": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    }
+}
